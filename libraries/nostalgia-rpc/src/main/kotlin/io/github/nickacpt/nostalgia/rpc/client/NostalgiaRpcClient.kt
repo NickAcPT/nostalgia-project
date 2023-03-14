@@ -6,7 +6,7 @@ import io.github.nickacpt.nostalgia.rpc.connection.RpcTransport
 import io.github.nickacpt.nostalgia.rpc.model.RpcMessage
 import io.github.nickacpt.nostalgia.rpc.utils.MessageCupid
 import io.github.nickacpt.nostalgia.rpc.utils.RpcUtils
-import java.util.concurrent.Future
+import java.util.concurrent.CompletableFuture
 
 class NostalgiaRpcClient: NostalgiaRpcEndpoint {
     private val cupid = MessageCupid()
@@ -20,7 +20,7 @@ class NostalgiaRpcClient: NostalgiaRpcEndpoint {
         cupid.weFoundTheOne(message.requestId, message)
     }
 
-    internal fun sendMessage(message: RpcMessage): Future<RpcMessage> {
+    internal fun sendMessage(message: RpcMessage): CompletableFuture<RpcMessage> {
         checkNotNull(transport) { "A transport is required to be set in order for us to be able to send messages" }
 
         // Try to find the one.

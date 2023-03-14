@@ -6,7 +6,7 @@ import io.github.nickacpt.nostalgia.rpc.model.RpcMessage
 import io.github.nickacpt.nostalgia.rpc.server.NostalgiaRpcServer
 import io.github.nickacpt.nostalgia.rpc.server.RpcClientConnection
 
-class InMemoryTransport(private val self: NostalgiaRpcEndpoint, private val other: NostalgiaRpcEndpoint) : RpcTransport {
+internal class InMemoryTransport(private val self: NostalgiaRpcEndpoint, private val other: NostalgiaRpcEndpoint) : RpcTransport {
 
     internal val flipped by lazy {
         InMemoryTransport(other, self)
@@ -29,7 +29,7 @@ class InMemoryTransport(private val self: NostalgiaRpcEndpoint, private val othe
     }
 }
 
-fun NostalgiaRpcServer.inMemoryTransport(client: NostalgiaRpcClient) = this.also {
+internal fun NostalgiaRpcServer.inMemoryTransport(client: NostalgiaRpcClient) = this.also {
     val transport = InMemoryTransport(client, it)
     client.transport = transport
 

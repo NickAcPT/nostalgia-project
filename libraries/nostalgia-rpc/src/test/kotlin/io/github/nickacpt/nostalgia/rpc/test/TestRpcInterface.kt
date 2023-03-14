@@ -18,3 +18,4 @@ interface TestRpcInterface {
     fun methodThatThrows(): Nothing
 
 }
+

@@ -4,7 +4,6 @@ import io.github.nickacpt.nostalgia.rpc.model.RpcMessage
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.Future
 
 
 /**
@@ -26,7 +25,7 @@ class MessageCupid {
      * @param originatingMessageId The originating message ID
      * @return Future for once we have a reply for the originating message
      */
-    fun findTheOne(originatingMessageId: UUID): Future<RpcMessage> {
+    fun findTheOne(originatingMessageId: UUID): CompletableFuture<RpcMessage> {
         return waitingQueue.getOrPut(originatingMessageId) { CompletableFuture() }
     }
 
