@@ -1,6 +1,6 @@
 package io.github.nickacpt.nostalgia.rpc.test
 
-interface RpcInterface {
+interface TestRpcInterface {
 
     // Normal void method
     fun voidMethod()
@@ -12,7 +12,7 @@ interface RpcInterface {
     fun overloadedMethod(arg1: String)
 
     // Overloaded Method (with String and an Int)
-    fun overloadedMethod(arg1: String, int1: Int)
+    fun overloadedMethod(arg1: String, arg2: Int)
 
     // Method that throws exception
     fun methodThatThrows(): Nothing

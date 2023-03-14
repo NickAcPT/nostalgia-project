@@ -15,7 +15,7 @@ import java.util.concurrent.Future
  *
  * That is the task of the MessageCupid, to match the messages sent and received.
  */
-internal class MessageCupid {
+class MessageCupid {
     private val waitingQueue = ConcurrentHashMap<UUID, CompletableFuture<RpcMessage>>()
 
     /**

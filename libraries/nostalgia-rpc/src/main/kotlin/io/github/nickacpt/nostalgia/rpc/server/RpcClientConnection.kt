@@ -4,8 +4,8 @@ import io.github.nickacpt.nostalgia.rpc.connection.RpcTransport
 import java.util.*
 
 internal data class RpcClientConnection(
-    val id: UUID = UUID.randomUUID(),
-    val transport: RpcTransport
+    val transport: RpcTransport,
+    val id: UUID = UUID.randomUUID()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
