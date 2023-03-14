@@ -8,25 +8,31 @@ import java.util.concurrent.ConcurrentHashMap
 
 class NostalgiaRpcServer : NostalgiaRpcEndpoint {
     private val connections = ConcurrentHashMap<UUID, RpcClientConnection>()
+    private val serviceHandler = NostalgiaServiceHandler()
 
     /**
      * Expose an RPC service on this server.
      */
-    inline fun <reified T> expose(service: T) {
+    inline fun <reified T : Any> expose(service: T) {
         val serviceClazz = T::class.java
         check(serviceClazz.isInterface) {
             "When exposing a service, pass an interface as the generic T parameter. " +
                     "${serviceClazz.name} isn't an interface!"
         }
 
-        // TODO: Expose services
+        expose(serviceClazz, service)
     }
 
-    internal fun addConnection(connection: RpcClientConnection) {
-        connections[connection.id] = connection
+    fun <T: Any> expose(serviceClazz: Class<T>, service: T) {
+        serviceHandler.exposeService(serviceClazz, service)
     }
 
     override fun handleReceivedMessage(message: RpcMessage, transport: RpcTransport) {
         // TODO: Handle messages
+        serviceHandler.handleMessage(message, transport)
+    }
+
+    internal fun addConnection(connection: RpcClientConnection) {
+        connections[connection.id] = connection
     }
 }

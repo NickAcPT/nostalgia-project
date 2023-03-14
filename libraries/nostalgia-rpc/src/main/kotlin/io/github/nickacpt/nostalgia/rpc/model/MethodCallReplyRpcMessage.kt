@@ -4,9 +4,9 @@ import java.util.*
 
 data class MethodCallReplyRpcMessage(
     override val requestId: UUID,
-    val result: Any?
+    val result: Result<Any?>?
 ) : RpcMessage {
     override fun asReturnResult(): Any? {
-        return result
+        return result?.getOrNull()
     }
 }
