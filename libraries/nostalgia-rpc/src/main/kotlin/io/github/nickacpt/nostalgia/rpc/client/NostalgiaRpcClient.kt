@@ -8,8 +8,9 @@ import io.github.nickacpt.nostalgia.rpc.utils.MessageCupid
 import io.github.nickacpt.nostalgia.rpc.utils.RpcUtils
 import java.util.concurrent.Future
 
-class NostalgiaRpcClient(private val transport: RpcTransport): NostalgiaRpcEndpoint {
+class NostalgiaRpcClient: NostalgiaRpcEndpoint {
     private val cupid = MessageCupid()
+    var transport: RpcTransport? = null
 
     inline fun <reified T : Any> proxy(): T {
         return Reflection.newProxy(T::class.java, RpcProxyHandler(this, RpcUtils.getClazzNameForService(T::class.java)))
@@ -20,10 +21,14 @@ class NostalgiaRpcClient(private val transport: RpcTransport): NostalgiaRpcEndpo
     }
 
     internal fun sendMessage(message: RpcMessage): Future<RpcMessage> {
-        // Send a message through our transport
-        transport.sendMessage(message)
+        checkNotNull(transport) { "A transport is required to be set in order for us to be able to send messages" }
 
-        // Now we wait until we find the one.
-        return cupid.findTheOne(message.requestId)
+        // Try to find the one.
+        val theOne = cupid.findTheOne(message.requestId)
+
+        // Send a message through our transport
+        transport!!.sendMessage(message)
+
+        return theOne
     }
 }

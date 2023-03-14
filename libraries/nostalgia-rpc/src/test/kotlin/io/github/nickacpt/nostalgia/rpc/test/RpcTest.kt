@@ -2,18 +2,18 @@ package io.github.nickacpt.nostalgia.rpc.test
 
 import io.github.nickacpt.nostalgia.rpc.client.NostalgiaRpcClient
 import io.github.nickacpt.nostalgia.rpc.client.RemoteRpcException
-import io.github.nickacpt.nostalgia.rpc.connection.InMemoryTransport
 import io.github.nickacpt.nostalgia.rpc.connection.inMemoryTransport
 import io.github.nickacpt.nostalgia.rpc.server.NostalgiaRpcServer
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 object RpcTest {
     private val server = NostalgiaRpcServer()
-    private val client = NostalgiaRpcClient(InMemoryTransport(server)).also {
+    private val client = NostalgiaRpcClient().also {
         server.inMemoryTransport(it)
     }
 
@@ -56,9 +56,11 @@ object RpcTest {
 
     @Test
     fun `throws exception when calling method that throws`() {
-        assertThrows<RemoteRpcException> {
+        val exception = assertThrows<RemoteRpcException> {
             clientProxy.methodThatThrows()
         }
+
+        assertEquals("Hello darkness, my old friend!", exception.message)
     }
 
 }

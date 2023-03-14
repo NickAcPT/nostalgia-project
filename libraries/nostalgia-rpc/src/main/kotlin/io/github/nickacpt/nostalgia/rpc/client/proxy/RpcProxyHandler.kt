@@ -2,6 +2,8 @@ package io.github.nickacpt.nostalgia.rpc.client.proxy
 
 import com.google.common.reflect.AbstractInvocationHandler
 import io.github.nickacpt.nostalgia.rpc.client.NostalgiaRpcClient
+import io.github.nickacpt.nostalgia.rpc.client.RemoteRpcException
+import io.github.nickacpt.nostalgia.rpc.model.MethodCallReplyRpcMessage
 import io.github.nickacpt.nostalgia.rpc.model.MethodCallRequestRpcMessage
 import io.github.nickacpt.nostalgia.rpc.utils.RpcUtils
 import java.lang.reflect.Method
@@ -19,6 +21,18 @@ class RpcProxyHandler(val client: NostalgiaRpcClient, val clazzName: String) : A
         val resultingMessage = client.sendMessage(requestModel)
 
         // Block for the result
-        return resultingMessage.get().asReturnResult()
+        val result = resultingMessage.get()
+
+        val exception = if (result !is MethodCallReplyRpcMessage) {
+            "We got an invalid reply for our call"
+        } else if (result.result == null) {
+            "We didn't get a result for our call"
+        } else if (result.result.isFailure) {
+            result.result.exceptionOrNull()?.message ?: "An error occurred but we didn't get a message for it.."
+        } else null
+
+        exception?.let { throw RemoteRpcException(exception) }
+
+        return (result as MethodCallReplyRpcMessage).result!!.getOrNull()
     }
 }
