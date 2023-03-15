@@ -3,8 +3,13 @@ plugins {
 }
 
 dependencies {
-    api("net.kyori:adventure-api:4.12.0")
+    api(libs.adventure.api)
 
-    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.junit)
     testImplementation(libs.mockk)
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }

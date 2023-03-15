@@ -28,7 +28,12 @@ dependencyResolutionManagement {
             library("kryo", "com.esotericsoftware:kryo:5.4.0")
             library("guava", "com.google.guava:guava:31.1-jre")
 
+            library("adventure-api", "net.kyori:adventure-api:4.12.0")
+
             library("kotlin-test", "org.jetbrains.kotlin:kotlin-test:1.8.0")
+
+            library("kotest-assertions-core", "io.kotest:kotest-assertions-core:5.5.5")
+            library("kotest-junit", "io.kotest:kotest-runner-junit5:5.5.5")
             library("mockk", "io.mockk:mockk:1.13.4")
         }
     }
