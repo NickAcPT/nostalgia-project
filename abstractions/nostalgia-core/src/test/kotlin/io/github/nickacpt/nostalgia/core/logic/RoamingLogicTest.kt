@@ -1,6 +1,5 @@
 package io.github.nickacpt.nostalgia.core.logic
 
-import io.github.nickacpt.nostalgia.core.Logger
 import io.github.nickacpt.nostalgia.core.NostalgiaCore
 import io.github.nickacpt.nostalgia.core.logic.RoamingLogic.roam
 import io.github.nickacpt.nostalgia.core.managers.PlayerManager
@@ -22,8 +21,6 @@ class RoamingLogicTest : WordSpec({
 
     mockkObject(NostalgiaCore)
     every { NostalgiaCore.playerManager } returns playerManager
-
-    mockkObject(Logger)
 
     beforeAny {
         clearMocks(shard1, shard2, player1, playerManager)
