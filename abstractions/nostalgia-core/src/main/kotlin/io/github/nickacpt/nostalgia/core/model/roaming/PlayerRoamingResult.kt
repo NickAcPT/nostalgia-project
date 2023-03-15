@@ -5,6 +5,6 @@ sealed class PlayerRoamingResult(val description: String, val success: Boolean =
     object SameShard : PlayerRoamingResult("Player tried roaming into the same shard they're currently in")
     data class ShardAcknowledgementFailed(val result: PlayerRoamingShardAcknowledgeResult) :
         PlayerRoamingResult("Shard's acknowledgement of the player failed with result: $result")
-    data class PlayerManagerFailedTeleport(val error: Exception) :
+    data class PlayerManagerTeleportError(val error: Exception) :
         PlayerRoamingResult("The Player Manager was unable to teleport to new shard and errored")
 }

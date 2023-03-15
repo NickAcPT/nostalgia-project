@@ -30,6 +30,7 @@ class RoamingLogicTest : WordSpec({
 
         every { player1.currentShard } returns shard1
 
+        // Make it so whenever a player gets "teleported into a shard", we update our mock to return the new shard
         every { playerManager.teleportPlayerToShard(capture(pSlot), capture(sSlot), any()) } answers {
             every { pSlot.captured.currentShard } answers {
                 sSlot.captured
@@ -100,7 +101,21 @@ class RoamingLogicTest : WordSpec({
 
             player1.currentShard shouldBe shard1
 
-            roam(player1, shard2) shouldBe PlayerRoamingResult.PlayerManagerFailedTeleport(ex)
+            roam(player1, shard2) shouldBe PlayerRoamingResult.PlayerManagerTeleportError(ex)
+
+            player1.currentShard shouldBe shard1
+        }
+
+        "shard acknowledgement throws an exception" should {
+            val ex = Exception("Mock Exception")
+
+            every { shard2.acknowledgePlayerRoamRequest(any()) } throws ex
+
+            player1.currentShard shouldBe shard1
+
+            roam(player1, shard2) shouldBe PlayerRoamingResult.ShardAcknowledgementFailed(
+                PlayerRoamingShardAcknowledgeResult.AcknowledgementError(ex)
+            )
 
             player1.currentShard shouldBe shard1
         }

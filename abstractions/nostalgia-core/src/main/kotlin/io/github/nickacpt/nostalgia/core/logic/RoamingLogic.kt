@@ -42,7 +42,7 @@ object RoamingLogic {
             debug("Player Manager was unable to teleport the player $player to shard $newShard.")
             debug("Error was: ${e.stackTraceToString()}")
 
-            return PlayerRoamingResult.PlayerManagerFailedTeleport(e)
+            return PlayerRoamingResult.PlayerManagerTeleportError(e)
         }
 
         debug("Roaming of player $player to shard $newShard was successful")
