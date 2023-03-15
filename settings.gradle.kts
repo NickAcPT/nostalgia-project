@@ -1,7 +1,23 @@
-
 rootProject.name = "nostalgia-project"
 
-include(":libraries:nostalgia-rpc")
+include(
+    // Remote Procedure Call library that handles communication between the services
+    ":libraries:nostalgia-rpc",
+
+    // Abstractions implementing various gameplay mechanics
+    ":abstractions:nostalgia-economy",
+    ":abstractions:nostalgia-mines",
+
+    // The logic itself that handles all player stuff
+    ":abstractions:nostalgia-core",
+
+    // The various plugins for the different platforms
+    ":plugins:nostalgia-bukkit",
+    ":plugins:nostalgia-velocity",
+
+    // CLI tool to deploy nostalgia servers
+    ":tools:nostalgia-cli",
+)
 
 dependencyResolutionManagement {
     versionCatalogs {
