@@ -1,5 +1,6 @@
 package io.github.nickacpt.nostalgia.rpc.server
 
+import io.github.nickacpt.nostalgia.rpc.NostalgiaRPC
 import io.github.nickacpt.nostalgia.rpc.connection.RpcTransport
 import io.github.nickacpt.nostalgia.rpc.model.MethodCallReplyRpcMessage
 import io.github.nickacpt.nostalgia.rpc.model.MethodCallRequestRpcMessage
@@ -76,10 +77,10 @@ class NostalgiaServiceHandler {
         exposedServices[RpcUtils.getClazzNameForService(serviceClazz)] = ServiceData.from(serviceClazz, service)
     }
 
-    fun handleMessage(message: RpcMessage, transport: RpcTransport) {
+    fun handleMessage(message: RpcMessage, transport: RpcTransport, rpc: NostalgiaRPC) {
         if (message is MethodCallRequestRpcMessage) {
             var result = runCatching {
-                handleInvocation(message)
+                handleInvocation(message, rpc)
             }
 
             val exception = result.exceptionOrNull()
@@ -89,18 +90,16 @@ class NostalgiaServiceHandler {
 
             val resultMessage = MethodCallReplyRpcMessage(
                 message.requestId,
-                result
+                result.map(rpc::mapOutgoingArgument)
             )
 
             transport.sendMessage(resultMessage)
         }
     }
 
-    private fun handleInvocation(call: MethodCallRequestRpcMessage): Any? {
+    private fun handleInvocation(call: MethodCallRequestRpcMessage, rpc: NostalgiaRPC): Any? {
         val service = exposedServices[call.clazz] ?: throw Exception("Service not found!")
 
-        return service.invoke(call.method, call.args)
+        return service.invoke(call.method, call.args.map(rpc::mapIncomingArgument))
     }
-
-
 }

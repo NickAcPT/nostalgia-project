@@ -34,7 +34,7 @@ class RpcProxyHandler(private val client: NostalgiaRpcClient, private val clazzN
         val requestModel = MethodCallRequestRpcMessage(
             clazzName,
             RpcUtils.getMethodNameForService(method),
-            argsList.toList()
+            argsList.map(client.rpc::mapOutgoingArgument)
         )
 
         // Send the message, we have to handle this after
@@ -52,7 +52,7 @@ class RpcProxyHandler(private val client: NostalgiaRpcClient, private val clazzN
             runCatching {
                 exception?.let { throw RemoteRpcException(exception) }
 
-                (result as MethodCallReplyRpcMessage).result!!.getOrNull()
+                (result as MethodCallReplyRpcMessage).result!!.map(client.rpc::mapIncomingArgument).getOrNull()
             }
         }
 

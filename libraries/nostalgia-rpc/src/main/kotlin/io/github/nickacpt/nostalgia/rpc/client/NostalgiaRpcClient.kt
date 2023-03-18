@@ -1,6 +1,7 @@
 package io.github.nickacpt.nostalgia.rpc.client
 
 import com.google.common.reflect.Reflection
+import io.github.nickacpt.nostalgia.rpc.NostalgiaRPC
 import io.github.nickacpt.nostalgia.rpc.client.proxy.RpcProxyHandler
 import io.github.nickacpt.nostalgia.rpc.connection.RpcTransport
 import io.github.nickacpt.nostalgia.rpc.model.RpcMessage
@@ -8,7 +9,7 @@ import io.github.nickacpt.nostalgia.rpc.utils.MessageCupid
 import io.github.nickacpt.nostalgia.rpc.utils.RpcUtils
 import java.util.concurrent.CompletableFuture
 
-class NostalgiaRpcClient : NostalgiaRpcEndpoint {
+class NostalgiaRpcClient(val rpc: NostalgiaRPC) : NostalgiaRpcEndpoint {
     private val cupid = MessageCupid()
     var transport: RpcTransport? = null
         set(value) {

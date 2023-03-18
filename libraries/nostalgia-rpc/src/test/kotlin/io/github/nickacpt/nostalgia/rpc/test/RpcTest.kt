@@ -1,5 +1,6 @@
 package io.github.nickacpt.nostalgia.rpc.test
 
+import io.github.nickacpt.nostalgia.rpc.NostalgiaRPC
 import io.github.nickacpt.nostalgia.rpc.client.NostalgiaRpcClient
 import io.github.nickacpt.nostalgia.rpc.client.RemoteRpcException
 import io.github.nickacpt.nostalgia.rpc.connection.inMemoryTransport
@@ -13,8 +14,9 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 object RpcTest {
-    private val server = NostalgiaRpcServer()
-    private val client = NostalgiaRpcClient().also {
+    private val rpc = NostalgiaRPC()
+    private val server = NostalgiaRpcServer(rpc)
+    private val client = NostalgiaRpcClient(rpc).also {
         server.inMemoryTransport(it)
     }
 

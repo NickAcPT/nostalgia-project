@@ -1,12 +1,13 @@
 package io.github.nickacpt.nostalgia.rpc.server
 
+import io.github.nickacpt.nostalgia.rpc.NostalgiaRPC
 import io.github.nickacpt.nostalgia.rpc.client.NostalgiaRpcEndpoint
 import io.github.nickacpt.nostalgia.rpc.connection.RpcTransport
 import io.github.nickacpt.nostalgia.rpc.model.RpcMessage
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class NostalgiaRpcServer : NostalgiaRpcEndpoint {
+class NostalgiaRpcServer(val rpc: NostalgiaRPC) : NostalgiaRpcEndpoint {
     private val connections = ConcurrentHashMap<UUID, RpcClientConnection>()
     private val serviceHandler = NostalgiaServiceHandler()
 
@@ -35,7 +36,7 @@ class NostalgiaRpcServer : NostalgiaRpcEndpoint {
 
     override fun handleReceivedMessage(message: RpcMessage, transport: RpcTransport) {
         // TODO: Handle messages
-        serviceHandler.handleMessage(message, transport)
+        serviceHandler.handleMessage(message, transport, rpc)
     }
 
     override fun addConnection(connectionTransport: RpcTransport) {
