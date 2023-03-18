@@ -25,7 +25,9 @@ class NostalgiaRpcClient : NostalgiaRpcEndpoint {
     }
 
     override fun addConnection(connectionTransport: RpcTransport) {
-        transport = connectionTransport
+        if (transport != connectionTransport) {
+            transport = connectionTransport
+        }
     }
 
     internal fun sendMessage(message: RpcMessage): CompletableFuture<RpcMessage> {
