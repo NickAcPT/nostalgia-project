@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api(libs.adventure.api)
+    api(project(":libraries:nostalgia-services"))
 
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.junit)
