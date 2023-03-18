@@ -8,9 +8,13 @@ import io.github.nickacpt.nostalgia.rpc.utils.MessageCupid
 import io.github.nickacpt.nostalgia.rpc.utils.RpcUtils
 import java.util.concurrent.CompletableFuture
 
-class NostalgiaRpcClient: NostalgiaRpcEndpoint {
+class NostalgiaRpcClient : NostalgiaRpcEndpoint {
     private val cupid = MessageCupid()
     var transport: RpcTransport? = null
+        set(value) {
+            field = value
+            value?.init(this)
+        }
 
     inline fun <reified T : Any> proxy(): T {
         return Reflection.newProxy(T::class.java, RpcProxyHandler(this, RpcUtils.getClazzNameForService(T::class.java)))
@@ -18,6 +22,10 @@ class NostalgiaRpcClient: NostalgiaRpcEndpoint {
 
     override fun handleReceivedMessage(message: RpcMessage, transport: RpcTransport) {
         cupid.weFoundTheOne(message.requestId, message)
+    }
+
+    override fun addConnection(connectionTransport: RpcTransport) {
+        transport = connectionTransport
     }
 
     internal fun sendMessage(message: RpcMessage): CompletableFuture<RpcMessage> {

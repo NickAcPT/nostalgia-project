@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 import java.lang.reflect.Method
 import kotlin.coroutines.Continuation
 
-class RpcProxyHandler(private val client: NostalgiaRpcClient, private val clazzName: String) : AbstractInvocationHandler() {
+class RpcProxyHandler(private val client: NostalgiaRpcClient, private val clazzName: String) :
+    AbstractInvocationHandler() {
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
     override fun handleInvocation(proxy: Any, method: Method, args: Array<out Any?>): Any? {

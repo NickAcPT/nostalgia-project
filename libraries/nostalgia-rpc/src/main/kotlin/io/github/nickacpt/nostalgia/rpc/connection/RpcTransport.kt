@@ -11,7 +11,7 @@ interface RpcTransport : Closeable {
     /**
      * Initialize this transport for the first time.
      */
-    fun init()
+    fun init(callback: TransportEndpointCallback)
 
     fun sendMessage(message: RpcMessage)
 }

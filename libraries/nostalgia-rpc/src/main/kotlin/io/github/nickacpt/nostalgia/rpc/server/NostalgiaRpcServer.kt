@@ -10,6 +10,12 @@ class NostalgiaRpcServer : NostalgiaRpcEndpoint {
     private val connections = ConcurrentHashMap<UUID, RpcClientConnection>()
     private val serviceHandler = NostalgiaServiceHandler()
 
+    var bootstrapTransport: RpcTransport? = null
+        set(value) {
+            field = value
+            value?.init(this)
+        }
+
     /**
      * Expose an RPC service on this server.
      */
@@ -23,13 +29,17 @@ class NostalgiaRpcServer : NostalgiaRpcEndpoint {
         expose(serviceClazz, service)
     }
 
-    fun <T: Any> expose(serviceClazz: Class<T>, service: T) {
+    fun <T : Any> expose(serviceClazz: Class<T>, service: T) {
         serviceHandler.exposeService(serviceClazz, service)
     }
 
     override fun handleReceivedMessage(message: RpcMessage, transport: RpcTransport) {
         // TODO: Handle messages
         serviceHandler.handleMessage(message, transport)
+    }
+
+    override fun addConnection(connectionTransport: RpcTransport) {
+        addConnection(RpcClientConnection(connectionTransport))
     }
 
     internal fun addConnection(connection: RpcClientConnection) {
