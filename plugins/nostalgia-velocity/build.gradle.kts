@@ -11,4 +11,5 @@ dependencies {
     kapt("com.velocitypowered:velocity-api:3.1.1")
 
     implementation(project(":libraries:nostalgia-rpc"))
+    implementation(project(":abstractions:nostalgia-core"))
 }

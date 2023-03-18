@@ -5,6 +5,11 @@ import net.kyori.adventure.text.Component
 
 object Logger {
     var audience: Audience = Audience.empty()
+        private set
+
+    fun init(audience: Audience) {
+        this.audience = audience
+    }
 
     private val components = mutableMapOf<String, Component>()
 
