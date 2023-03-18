@@ -3,8 +3,6 @@ rootProject.name = "nostalgia-project"
 include(
     // Remote Procedure Call library that handles communication between the services
     ":libraries:nostalgia-rpc",
-    // Interfaces for the various services implemented by the system
-    ":libraries:nostalgia-services",
 
     // Abstractions implementing various gameplay mechanics
     ":abstractions:nostalgia-economy",
