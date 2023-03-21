@@ -10,7 +10,7 @@ import io.github.nickacpt.nostalgia.core.NostalgiaCore
 import io.github.nickacpt.nostalgia.velocity.managers.VelocityPlayerManager
 
 @Plugin(id = "nostalgia", name = "Nostalgia Project", authors = ["NickAcPT"])
-class NostalgiaPlugin @Inject constructor(
+class VelocityNostalgiaPlugin @Inject constructor(
     private val proxy: ProxyServer,
     private val eventManager: EventManager,
     private val playerManager: VelocityPlayerManager
