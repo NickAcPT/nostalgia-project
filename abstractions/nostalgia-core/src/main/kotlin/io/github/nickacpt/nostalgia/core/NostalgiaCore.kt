@@ -3,11 +3,16 @@ package io.github.nickacpt.nostalgia.core
 import io.github.nickacpt.nostalgia.core.logic.mapping.RemoteNostalgiaPlayerReferenceMapper
 import io.github.nickacpt.nostalgia.core.managers.PlayerManager
 import io.github.nickacpt.nostalgia.rpc.NostalgiaRPC
+import io.github.nickacpt.nostalgia.rpc.client.NostalgiaRpcClient
 import net.kyori.adventure.audience.Audience
 
 object NostalgiaCore {
-    val rpc = NostalgiaRPC().apply {
+    private val rpc = NostalgiaRPC().apply {
         registerArgumentMapper(RemoteNostalgiaPlayerReferenceMapper)
+    }
+
+    fun createRpcClient(): NostalgiaRpcClient {
+        return NostalgiaRpcClient(rpc)
     }
 
     var playerManager: PlayerManager = PlayerManager.EMPTY

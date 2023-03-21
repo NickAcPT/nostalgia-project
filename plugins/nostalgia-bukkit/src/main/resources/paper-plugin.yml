@@ -1,4 +1,4 @@
 name: 'NostalgiaProject'
-main: 'io.github.nickacpt.nostalgia.bukkit.NostalgiaPlugin'
+main: 'io.github.nickacpt.nostalgia.bukkit.BukkitNostalgiaPlugin'
 version: '1.0-SNAPSHOT'
 api-version: '1.19'
