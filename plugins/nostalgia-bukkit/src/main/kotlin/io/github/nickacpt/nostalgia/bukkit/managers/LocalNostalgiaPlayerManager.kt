@@ -1,6 +1,7 @@
 package io.github.nickacpt.nostalgia.bukkit.managers
 
 import io.github.nickacpt.nostalgia.bukkit.model.LocalNostalgiaPlayer
+import io.github.nickacpt.nostalgia.core.model.NostalgiaPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -11,6 +12,9 @@ import java.util.concurrent.ConcurrentHashMap
 
 object LocalNostalgiaPlayerManager : Listener {
     private val playerMap: MutableMap<UUID, LocalNostalgiaPlayer> = ConcurrentHashMap()
+
+    internal val players: Collection<NostalgiaPlayer>
+        get() = playerMap.values
 
     fun getNostalgiaPlayer(id: UUID) = playerMap.getOrPut(id) {
         LocalNostalgiaPlayer(id)
