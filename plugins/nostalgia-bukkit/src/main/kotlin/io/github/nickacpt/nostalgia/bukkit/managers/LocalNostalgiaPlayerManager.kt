@@ -1,6 +1,6 @@
-package io.github.nickacpt.nostalgia.bukkit.model
+package io.github.nickacpt.nostalgia.bukkit.managers
 
-import org.bukkit.entity.Player
+import io.github.nickacpt.nostalgia.bukkit.model.LocalNostalgiaPlayer
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -31,5 +31,3 @@ object LocalNostalgiaPlayerManager : Listener {
         removePlayer(e.player.uniqueId)
     }
 }
-
-val Player.nostalgia get() = LocalNostalgiaPlayerManager.getNostalgiaPlayer(uniqueId)
