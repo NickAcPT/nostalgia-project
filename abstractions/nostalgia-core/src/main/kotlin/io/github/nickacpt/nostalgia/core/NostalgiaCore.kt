@@ -4,6 +4,7 @@ import io.github.nickacpt.nostalgia.core.logic.mapping.RemoteNostalgiaPlayerRefe
 import io.github.nickacpt.nostalgia.core.managers.PlayerManager
 import io.github.nickacpt.nostalgia.rpc.NostalgiaRPC
 import io.github.nickacpt.nostalgia.rpc.client.NostalgiaRpcClient
+import io.github.nickacpt.nostalgia.rpc.server.NostalgiaRpcServer
 import net.kyori.adventure.audience.Audience
 
 object NostalgiaCore {
@@ -13,6 +14,10 @@ object NostalgiaCore {
 
     fun createRpcClient(): NostalgiaRpcClient {
         return NostalgiaRpcClient(rpc)
+    }
+
+    fun createRpcServer(): NostalgiaRpcServer {
+        return NostalgiaRpcServer(rpc)
     }
 
     var playerManager: PlayerManager = PlayerManager.EMPTY
